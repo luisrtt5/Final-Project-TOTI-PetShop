@@ -20,6 +20,16 @@ router.get("/products", (req, res) => {
       .then((data) => res.json(data))
       .catch((error) => res.json({ message: error }));
   });
+  /**
+  * @swagger
+ * /products:
+ *  get:
+ *    description: Use to request all products
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ *
+ */
 
   // get a product
 router.get("/products/:id", (req, res) => {
