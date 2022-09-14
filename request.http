@@ -1,26 +1,26 @@
 ###
-POST http://localhost:3000/api/products HTTP/1.1
+POST http://localhost:3000/api/product HTTP/1.1
 Content-Type: application/json
 
 { 
-  "name": "huesitos de gato",
-  "price" : 23,
-  "purchasePrice": 23
+  "nome": "Ração Three Dogs Original Frango, Carne e Arroz para Cães",
+  "marca" : "Three Dogs",
+  "preço": 296.79,
+  "tipo" : "Adultos"
 }
+###
+GET http://localhost:3000/api/product HTTP/1.1
 
 ###
-GET http://localhost:3000/api/products HTTP/1.1
-
-###
-GET http://localhost:3000/api/products/6137e2bb2e329eb206b0073e HTTP/1.1
+GET http://localhost:3000/api/product/6137e2bb2e329eb206b0073e HTTP/1.1
 
 ###
 
-DELETE http://localhost:3000/api/products/631d5a76073e1ce48cbada49 HTTP/1.1
+DELETE http://localhost:3000/api/product/63211944b683f8e18043120e HTTP/1.1
 
 
 ###
-PUT http://localhost:3000/api/products/6137e2412e329eb206b0073c HTTP/1.1
+PUT http://localhost:3000/api/product/6137e2412e329eb206b0073c HTTP/1.1
 
 Content-Type: application/json
 
