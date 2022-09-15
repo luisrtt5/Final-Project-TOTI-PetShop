@@ -3,9 +3,9 @@ POST http://localhost:3000/api/product HTTP/1.1
 Content-Type: application/json
 
 { 
-  "nome": "Ração Three Dogs Original Frango, Carne e Arroz para Cães",
-  "marca" : "Three Dogs",
-  "preço": 296.79,
+  "nome": "Ração Fórmula Natural Life",
+  "marca" : "Fórmula Natural",
+  "preço": 275.9,
   "tipo" : "Adultos"
 }
 ###

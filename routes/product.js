@@ -20,49 +20,55 @@ const router = express.Router();
   *                 type: number      
   */
 // create product
+router.post("/product", async (req, res) => {
+  const product = await productSchema(req.body);
+  product
+    .save()
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
 
-router.post("/product", (req, res) => {
-    const product = productSchema(req.body);
-    product
-      .save()
-      .then((data) => res.json(data))
-      .catch((error) => res.json({ message: error }));
-  });
 
-  // get all product
-router.get("/product", (req, res) => {
-    productSchema
-      .find()
-      .then((data) => res.json(data))
-      .catch((error) => res.json({ message: error }));
-  });
- 
-router.get("/product/:id", (req, res) => {
-    const { id } = req.params;
-    productSchema
-      .findById(id)
-      .then((data) => res.json(data))
-      .catch((error) => res.json({ message: error }));
-  });
+// get all products
+router.get("/product", async (req, res) => {
+     await productSchema
+    .find()
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+    
+});
 
-  // delete a product
-router.delete("/product/:id", (req, res) => {
-    const { id } = req.params;
-    productSchema
-      .remove({ _id: id })
-      .then((data) => res.json(data))
-      .catch((error) => res.json({ message: error }));
-  });
 
-  // update a product 
-router.put("/product/:id", (req, res) => {
-    const { id } = req.params;
-    const { name, age, email } = req.body;
-    productsSchema
-      .updateOne({ _id: id }, { $set: { name, price } })
-      .then((data) => res.json(data))
-      .catch((error) => res.json({ message: error }));
-  });
+// get  a product
+router.get("/product/:id", async (req, res) => {
+  const { id } = await req.params;
+  productSchema
+    .findById(id)
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+
+});
+
+// delete a product
+router.delete("/product/:id", async (req, res) => {
+  const { id } =  await req.params;
+  productSchema
+    .remove({ _id: id })
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+
+
+// update a product 
+router.put("/product/:id", async (req, res) => {
+  const { id } = await  req.params;
+  const { name, price, purchasePrice} =  await req.body;
+  productSchema
+    .updateOne({ _id: id }, { $set: { name, price, purchasePrice } })
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error }));
+});
+
 
 
 
