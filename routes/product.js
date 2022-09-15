@@ -17,9 +17,9 @@ const router = express.Router();
   *              preço: 
   *                 type: number     
   *              tipo: 
-  *                 type: number      
+  *                 type: string     
   */
-// create product
+// criar produto
 router.post("/product", async (req, res) => {
   const product = await productSchema(req.body);
   product
@@ -29,7 +29,7 @@ router.post("/product", async (req, res) => {
 });
 
 
-// get all products
+// todos os productos
 router.get("/product", async (req, res) => {
      await productSchema
     .find()
@@ -39,9 +39,9 @@ router.get("/product", async (req, res) => {
 });
 
 
-// get  a product
+// um produto
 router.get("/product/:id", async (req, res) => {
-  const { id } = await req.params;
+  const { id } = req.params; await
   productSchema
     .findById(id)
     .then((data) => res.json(data))
@@ -49,22 +49,22 @@ router.get("/product/:id", async (req, res) => {
 
 });
 
-// delete a product
+// deletar produto
 router.delete("/product/:id", async (req, res) => {
-  const { id } =  await req.params;
+  const { id } = req.params; await
   productSchema
-    .remove({ _id: id })
+    .deleteOne({ _id: id })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
 
 
-// update a product 
+// atualizar  produto
 router.put("/product/:id", async (req, res) => {
-  const { id } = await  req.params;
-  const { name, price, purchasePrice} =  await req.body;
+  const { id } =  req.params;
+  const { nome, marca, preço, tipo} =  await req.body;
   productSchema
-    .updateOne({ _id: id }, { $set: { name, price, purchasePrice } })
+    .updateOne({ _id: id }, { $set: { nome, marca, preço, tipo } })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
@@ -74,113 +74,115 @@ router.put("/product/:id", async (req, res) => {
 
 
  // código para criar um produto
+/**
+ * @swagger
+ * /api/product:
+ *  post:
+ *      summary: Criar um produto
+ *      tags: [Product]
+ *      requestBody: 
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                     $ref: '#/components/schemas/product'
+ *                  required: true
+ *      responses:
+ *          200:
+ *              description: produto criado com sucesso
+ */
 
-  /**
-   * @swagger
-   * /api/product:
-   *  post:
-   *      summary: Create a new product
-   *      tags: [Product]
-   *      consumes:
-   *          - application/json
-   *      parameters:
-   *        - in: body
-   *          name: Product
-   *          schema:
-   *              $ref: '#/components/schemas/product'
-   *      responses:
-   *          201:
-   *              description: Product created
-   */
-  
-  
- //código para todos os produtos
-  
-  
-  /**
-  * @swagger
-  * /api/product:
-  *  get:
-  *    summary: Get all products
-  *    tags: [Product] 
-  *    description: Use to request all product
-  *    responses:
-  *      '200': 
-  *         content:
-  *           aplication/json:
-  *            schema:
-  *               type: array
-  *               items:
-  *                 $ref: '#/components/schemas/product'
-  */
+
+//código para todos os produtos
+
+/**
+* @swagger
+* /api/product:
+*  get:
+*    summary: Todos os produtos
+*    tags: [Product] 
+*    description: Use para solicitar todos os produtos
+*    responses:
+*      '200': 
+*         content:
+*           aplication/json:
+*            schema:
+*               type: array
+*               items:
+*                 $ref: '#/components/schemas/product'
+*/
+
  
-   
-  
-  // Get a product by ID 
-  /**
-   * @swagger
-   * /api/product/{productId}:
-   *  get:
-   *      summary: get a product
-   *      tags: [Product]
-   *      parameters:
-   *        - in: path
-   *          name: Product Id
-   *          schema:
-   *              type: string
-   *          required: true
-   *          description: Id of the product to updateOne
-   *      responses:
-   *          200:
-   *              description: Get product
-   *              schema:
-  *                type: array
-  *                items:
-  *                 $ref: '#/components/schemas/product'
-   */
-  
-  
- // código para update do produto 
-  
-  /**
-   * @swagger
-   * /api/product/{productId}:
-   *  put:
-   *      summary: Update a product
-   *      tags: [Product]
-   *      parameters:
-   *        - in: path
-   *          name: Product Id
-   *          schema:
-   *              type: string
-   *          required: true
-   *          description: Id of the product to updateOne
-   *      responses:
-   *          200:
-   *              description: Product that was update
-   *              schema:
-   *                 $ref: '#/components/schemas/product'
-   */
-  
-   // código para apagar um produto
-  
-  /**
-   * @swagger
-   * /api/product/{productId}:
-   *  delete:
-   *      summary: Delete a product
-   *      tags: [Product]
-   *      parameters:
-   *        - in: path
-   *          name: Product Id
-   *          schema:
-   *              type: string
-   *          required: true
-   *          description: string id of user to delete
-   *      responses:
-   *          200:
-   *              description: Product that was deleted
-   */
 
+// Get producto por id  
+/**
+ * @swagger
+ * /api/product/{id}:
+ *  get:
+ *      summary: Produto por id
+ *      tags: [Product]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:  
+ *              type: string
+ *          required: true 
+ *      responses:
+ *          200:
+ *              description: produto encontrado 
+ *          422:
+ *              description: produto não encontrado
+ */
+
+
+
+ // código para update do produto 
+/**
+ * @swagger
+ * /api/product/{id}:
+ *  put:
+ *      summary: Atualizar produto
+ *      tags: [Product]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:  
+ *              type: string
+ *          required: true
+ *      requestBody:
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                       $ref: '#/components/schemas/product'
+ *      responses:
+ *          200:
+ *              description: Produto atualizado
+ *          422:
+ *              description: Produto não encontrado
+ */
+
+
+
+ // código para apagar um produto
+
+ /**
+ * @swagger
+ * /api/product/{id}:
+ *  delete:
+ *      summary: Deletar produto
+ *      tags: [Product]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:  
+ *              type: string
+ *              $ref: '#/components/schemas/product'
+ *          required: true 
+ *      responses:
+ *          200:
+ *              description: Produto deletado
+ *          422:
+ *              description: Produto não encontrado
+ */
 
 module.exports = router;
